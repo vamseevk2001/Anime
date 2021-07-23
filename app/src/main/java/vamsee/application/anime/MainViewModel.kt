@@ -10,11 +10,35 @@ import vamsee.application.anime.repository.Repository
 
 class MainViewModel(private val repository: Repository):ViewModel() {
     val myResponse: MutableLiveData<Response<Anime>> = MutableLiveData()
+    val topMovies: MutableLiveData<Response<Anime>> = MutableLiveData()
+    val topAiring: MutableLiveData<Response<Anime>> = MutableLiveData()
+    val topUpcoming: MutableLiveData<Response<Anime>> = MutableLiveData()
 
     fun getAnime(){
         viewModelScope.launch {
             val response = repository.getAnime()
             myResponse.value = response
+        }
+    }
+
+    fun getTopMovies(){
+        viewModelScope.launch {
+            val response = repository.getTopMovies()
+            topMovies.value = response
+        }
+    }
+
+    fun getTopAiring(){
+        viewModelScope.launch {
+            val response = repository.getTopAiring()
+            topAiring.value = response
+        }
+    }
+
+    fun getTopUpcoming(){
+        viewModelScope.launch {
+            val response = repository.getTopUpcoming()
+            topUpcoming.value = response
         }
     }
 }

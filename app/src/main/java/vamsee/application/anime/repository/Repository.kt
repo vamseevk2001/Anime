@@ -8,4 +8,17 @@ class Repository {
     suspend fun getAnime(): Response<Anime> {
         return RetrofitInstance.api.getAnime()
     }
+
+    suspend fun getTopMovies(): Response<Anime> {
+        return RetrofitInstance.api.getTopMovies()
+    }
+
+    suspend fun getTopAiring(): Response<Anime> {
+        return RetrofitInstance.api.getTopAiring()
+    }
+
+    suspend fun getTopUpcoming(): Response<Anime> {
+        return RetrofitInstance.api.getTopUpcoming()
+    }
+
 }
