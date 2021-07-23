@@ -5,25 +5,42 @@
     android:layout_height="wrap_content">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/poster"
-        android:layout_width="140dp"
-        android:layout_margin="5dp"
-        android:layout_height="220dp"
+        android:id="@+id/animePoster"
+        android:layout_width="160dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@color/black"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:alpha="0.8"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/animeName" />
+
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/animeName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:lines="2"
+        android:padding="4dp"
+        android:singleLine="false"
         android:text="Naruto"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/poster"
-        app:layout_constraintStart_toStartOf="@id/poster"
-        android:layout_margin="5dp"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/animePoster"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@id/animePoster" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import vamsee.application.anime.modal.AnimeSeries
+import vamsee.application.anime.modal.Anime
 import vamsee.application.anime.repository.Repository
 
 class MainViewModel(private val repository: Repository):ViewModel() {
-    val myResponse: MutableLiveData<Response<AnimeSeries>> = MutableLiveData()
+    val myResponse: MutableLiveData<Response<Anime>> = MutableLiveData()
 
     fun getAnime(){
         viewModelScope.launch {
