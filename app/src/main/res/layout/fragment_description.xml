@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DescriptionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp"
+        android:drawableLeft="@drawable/ic_baseline_playlist_add_24"
+        android:text="Add to Watchlist"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/animeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Naruto: shonen"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        />
+
+    <TextView
+        android:id="@+id/AnimeDescription"
+        android:layout_width="match_parent"
+        tools:text="ladfk jadklfjad;lfkja dfaj f;lajfojldkf ad;lfkjad;lfkja;dfkajdf;lakjdf;alkdjfa;ldkfj a;dlfkja;dlfkja;dlfkj a;dlfja;dlfja;dlf;alk dja;dlfkj ad;fkja;dfajdflkajd;flkajdf;akljd"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/animeTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

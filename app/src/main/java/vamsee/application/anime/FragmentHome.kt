@@ -9,21 +9,24 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import vamsee.application.anime.adapter.MyAdapter
+import vamsee.application.anime.adapter.OnItemClick
 import vamsee.application.anime.databinding.FragmentHomeBinding
+import vamsee.application.anime.modal.AnimeSeries
 import vamsee.application.anime.repository.Repository
 
-class FragmentHome : Fragment() {
+class FragmentHome : Fragment(), OnItemClick {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MainViewModel
 
-    private val topRatedAdapter by lazy { context?.let { MyAdapter(it) } }
-    private val trendingNowAdapter by lazy { context?.let { MyAdapter(it) } }
-    private val topMoviesAdapter by lazy { context?.let { MyAdapter(it) } }
-    private val topUpcomingAdapter by lazy { context?.let { MyAdapter(it) } }
+    private val topRatedAdapter by lazy { context?.let { MyAdapter(it, this) } }
+    private val trendingNowAdapter by lazy { context?.let { MyAdapter(it, this) } }
+    private val topMoviesAdapter by lazy { context?.let { MyAdapter(it, this) } }
+    private val topUpcomingAdapter by lazy { context?.let { MyAdapter(it, this) } }
 
     private lateinit var topRated: RecyclerView
     private lateinit var trending: RecyclerView
@@ -121,8 +124,9 @@ class FragmentHome : Fragment() {
         })
     }
 
-
-
-
+    override fun onAnimeClick(item: AnimeSeries, view: View) {
+        val action = FragmentHomeDirections.actionFragmentHomeToDescriptionFragment(item.mal_id, item.title)
+        view.findNavController().navigate(action)
+    }
 
 }

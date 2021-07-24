@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import vamsee.application.anime.R
 import vamsee.application.anime.modal.AnimeSeries
 
-class MyAdapter(private val context: Context): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(private val context: Context, private val listner: OnItemClick): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
     private var animeList = emptyList<AnimeSeries>()
 
@@ -21,7 +21,13 @@ class MyAdapter(private val context: Context): RecyclerView.Adapter<MyAdapter.My
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.posters, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.posters, parent, false)
+        val viewHolder = MyViewHolder(view)
+
+        view.setOnClickListener{
+            listner.onAnimeClick(animeList[viewHolder.adapterPosition], view)
+        }
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -38,4 +44,8 @@ class MyAdapter(private val context: Context): RecyclerView.Adapter<MyAdapter.My
         animeList = newList
         notifyDataSetChanged()
     }
+}
+
+interface OnItemClick{
+    fun onAnimeClick(item: AnimeSeries, view: View)
 }

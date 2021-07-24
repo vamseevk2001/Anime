@@ -17,5 +17,16 @@
         android:id="@+id/descriptionFragment"
         android:name="vamsee.application.anime.DescriptionFragment"
         android:label="fragment_description"
-        tools:layout="@layout/fragment_description" />
+        tools:layout="@layout/fragment_description" >
+        <action
+            android:id="@+id/action_descriptionFragment_to_fragmentHome"
+            app:destination="@id/fragmentHome" />
+        <argument
+            android:name="mal_id"
+            app:argType="long" />
+        <argument
+            android:name="title"
+            app:argType="string"
+            android:defaultValue="vamsee" />
+    </fragment>
 </navigation>
