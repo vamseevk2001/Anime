@@ -4,6 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path
+import retrofit2.http.Query
 import vamsee.application.anime.modal.Anime
 import vamsee.application.anime.modal.PosterList
 
@@ -44,5 +45,16 @@ interface SimpleApi {
     suspend fun getAnimePosters(
         @Path(value = "id") id: Long
     ): Response<PosterList>
+
+
+    @Headers(
+        "x-rapidapi-key: 299a2003d8mshb2d9b905fd9b742p1bd261jsn4fd206e66217",
+        "x-rapidapi-host: jikan1.p.rapidapi.com"
+    )
+    @GET("search/anime")
+    suspend fun searchAnime(
+        @Query("q") name: String,
+        @Query("type") type: String = "anime"
+    ): Response<Anime>
 
 }

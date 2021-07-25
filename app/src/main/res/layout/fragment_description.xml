@@ -30,19 +30,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Naruto: shonen"
-        android:textColor="@color/black"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/viewPager"
         app:layout_constraintStart_toStartOf="parent"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
         />
 
     <TextView
         android:id="@+id/AnimeDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/animeTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Subtitle"
         tools:text="ladfk jadklfjad;lfkja dfaj f;lajfojldkf ad;lfkjad;lfkja;dfkajdf;lakjdf;alkdjfa;ldkfj a;dlfkja;dlfkja;dlfkj a;dlfja;dlfja;dlf;alk dja;dlfkj ad;fkja;dfajdflkajd;flkajdf;akljd" />
 
 

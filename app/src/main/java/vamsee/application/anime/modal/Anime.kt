@@ -1,5 +1,9 @@
 package vamsee.application.anime.modal
 
+import com.google.gson.annotations.SerializedName
+
 data class Anime(
-    val top: List<AnimeSeries>
+    val top: List<AnimeSeries>,
+    @SerializedName("results")
+    val searchResults: List<AnimeSeries>
 )

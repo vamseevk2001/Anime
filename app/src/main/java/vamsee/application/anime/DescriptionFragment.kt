@@ -51,20 +51,12 @@ class DescriptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-//        val posterList: ArrayList<String> = arrayListOf("https://cdn.myanimelist.net/images/anime/13/11194l.jpg",
-//            "https://cdn.myanimelist.net/images/anime/5/17407l.jpg", "https://cdn.myanimelist.net/images/anime/5/22654l.jpg",
-//            "https://cdn.myanimelist.net/images/anime/2/50745l.jpg", "https://cdn.myanimelist.net/images/anime/9/59431l.jpg")
-
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getAnimePosters(mal_id)
-        val posterList: ArrayList<Poster>
         viewModel.posterList.observe(viewLifecycleOwner, Observer { response ->
            if(response.isSuccessful){
-//                response.body()?.forEach{
-//                    posterList.add(it)
-//                }
                response.body()?.let { posterAdapter?.setPoster(
                    if (it.pictures.size > 5){
                        it.pictures.take(5) as ArrayList<Poster>
@@ -82,9 +74,23 @@ class DescriptionFragment : Fragment() {
             }
         })
 
-        binding.animeTitle.text = title
-        binding.AnimeDescription.text = mal_id.toString()
+        viewModel.searchAnime(title)
+        viewModel.searchedAnime.observe(viewLifecycleOwner, Observer { response ->
+            if(response.isSuccessful){
+                response.body()?.searchResults?.forEach lit@{
+                    if (it.mal_id == mal_id){
+                        binding.AnimeDescription.text = it.synopsis
+                        return@lit
+                    }
+                }
+            }
+            else{
+                Toast.makeText(context, "unable to search anime !!", Toast.LENGTH_SHORT).show()
+            }
 
+        })
+
+        binding.animeTitle.text = title
         val viewPager = binding.viewPager
         viewPager.adapter = posterAdapter
 

@@ -26,4 +26,8 @@ class Repository {
         return RetrofitInstance.api.getAnimePosters(id)
     }
 
+    suspend fun searchAnime(name: String): Response<Anime>{
+        return RetrofitInstance.api.searchAnime(name)
+    }
+
 }
