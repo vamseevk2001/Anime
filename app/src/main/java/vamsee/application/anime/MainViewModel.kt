@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import vamsee.application.anime.modal.Anime
+import vamsee.application.anime.modal.PosterList
 import vamsee.application.anime.repository.Repository
 
 class MainViewModel(private val repository: Repository):ViewModel() {
@@ -13,6 +14,7 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     val topMovies: MutableLiveData<Response<Anime>> = MutableLiveData()
     val topAiring: MutableLiveData<Response<Anime>> = MutableLiveData()
     val topUpcoming: MutableLiveData<Response<Anime>> = MutableLiveData()
+    val posterList: MutableLiveData<Response<PosterList>> = MutableLiveData()
 
     fun getAnime(){
         viewModelScope.launch {
@@ -39,6 +41,13 @@ class MainViewModel(private val repository: Repository):ViewModel() {
         viewModelScope.launch {
             val response = repository.getTopUpcoming()
             topUpcoming.value = response
+        }
+    }
+
+    fun getAnimePosters(id: Long){
+        viewModelScope.launch {
+            val response = repository.getAnimePosters(id)
+            posterList.value = response
         }
     }
 }

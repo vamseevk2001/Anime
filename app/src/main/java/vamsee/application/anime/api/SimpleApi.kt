@@ -3,7 +3,9 @@ package vamsee.application.anime.api
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import vamsee.application.anime.modal.Anime
+import vamsee.application.anime.modal.PosterList
 
 interface SimpleApi {
     @Headers(
@@ -33,5 +35,14 @@ interface SimpleApi {
     )
     @GET("top/anime/1/upcoming")
     suspend fun getTopUpcoming(): Response<Anime>
+
+    @Headers(
+        "x-rapidapi-key: 299a2003d8mshb2d9b905fd9b742p1bd261jsn4fd206e66217",
+        "x-rapidapi-host: jikan1.p.rapidapi.com"
+    )
+    @GET("anime/{id}/pictures")
+    suspend fun getAnimePosters(
+        @Path(value = "id") id: Long
+    ): Response<PosterList>
 
 }
