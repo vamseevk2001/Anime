@@ -16,6 +16,8 @@ class MainViewModel(private val repository: Repository):ViewModel() {
     val topUpcoming: MutableLiveData<Response<Anime>> = MutableLiveData()
     val posterList: MutableLiveData<Response<PosterList>> = MutableLiveData()
     val searchedAnime: MutableLiveData<Response<Anime>> = MutableLiveData()
+    val promos: MutableLiveData<Response<Anime>> = MutableLiveData()
+    val recommendations: MutableLiveData<Response<Anime>> = MutableLiveData()
 
     fun getAnime(){
         viewModelScope.launch {
@@ -56,6 +58,20 @@ class MainViewModel(private val repository: Repository):ViewModel() {
         viewModelScope.launch {
             val response = repository.searchAnime(name)
             searchedAnime.value = response
+        }
+    }
+
+    fun getPromos(id: Long){
+        viewModelScope.launch {
+            val response = repository.getPromos(id)
+            promos.value = response
+        }
+    }
+
+    fun getRecommendations(id: Long){
+        viewModelScope.launch {
+            val response = repository.getRecommendations(id)
+            recommendations.value = response
         }
     }
 }

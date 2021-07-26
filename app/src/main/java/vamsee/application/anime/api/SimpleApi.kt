@@ -46,6 +46,15 @@ interface SimpleApi {
         @Path(value = "id") id: Long
     ): Response<PosterList>
 
+    @Headers(
+        "x-rapidapi-key: 299a2003d8mshb2d9b905fd9b742p1bd261jsn4fd206e66217",
+        "x-rapidapi-host: jikan1.p.rapidapi.com"
+    )
+    @GET("anime/{id}/videos")
+    suspend fun getPromos(
+        @Path(value = "id") id: Long
+    ): Response<Anime>
+
 
     @Headers(
         "x-rapidapi-key: 299a2003d8mshb2d9b905fd9b742p1bd261jsn4fd206e66217",
@@ -56,5 +65,17 @@ interface SimpleApi {
         @Query("q") name: String,
         @Query("type") type: String = "anime"
     ): Response<Anime>
+
+    @Headers(
+        "x-rapidapi-key: 299a2003d8mshb2d9b905fd9b742p1bd261jsn4fd206e66217",
+        "x-rapidapi-host: jikan1.p.rapidapi.com"
+    )
+    @GET("anime/{id}/recommendations")
+    suspend fun getRecommendations(
+        @Path(value = "id") id: Long
+    ): Response<Anime>
+
+
+
 
 }

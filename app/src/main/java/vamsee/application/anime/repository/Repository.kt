@@ -30,4 +30,12 @@ class Repository {
         return RetrofitInstance.api.searchAnime(name)
     }
 
+    suspend fun getPromos(id: Long): Response<Anime>{
+        return RetrofitInstance.api.getPromos(id)
+    }
+
+    suspend fun getRecommendations(id: Long): Response<Anime>{
+        return RetrofitInstance.api.getRecommendations(id)
+    }
+
 }
