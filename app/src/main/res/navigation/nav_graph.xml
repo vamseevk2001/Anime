@@ -28,5 +28,14 @@
             android:name="title"
             app:argType="string"
             android:defaultValue="vamsee" />
+        <argument
+            android:name="episodes"
+            app:argType="long" />
+        <argument
+            android:name="type"
+            app:argType="string" />
+        <argument
+            android:name="score"
+            app:argType="float" />
     </fragment>
 </navigation>

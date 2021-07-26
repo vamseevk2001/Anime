@@ -6,5 +6,6 @@ data class AnimeSeries(
     val image_url: String,
     val synopsis: String,
     val episodes: Long,
-    val score: Float
+    val score: Float,
+    val type: String
 )

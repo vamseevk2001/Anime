@@ -24,8 +24,13 @@ class DescriptionFragment : Fragment() {
 
     private var _binding: FragmentDescriptionBinding? = null
     private val binding get() = _binding!!
+
     private var mal_id by Delegates.notNull<Long>()
     private lateinit var title: String
+    private var score by Delegates.notNull<Float>()
+    private var episodes by Delegates.notNull<Long>()
+    private lateinit var type: String
+
     private val autoSlider: Handler = Handler()
     private lateinit var viewModel: MainViewModel
     private val posterAdapter by lazy { context?.let { ImageSliderAdapter(it, binding.viewPager) } }
@@ -37,6 +42,9 @@ class DescriptionFragment : Fragment() {
         arguments?.let {
             title = it.getString("title").toString()
             mal_id = it.getLong("mal_id")
+            score = it.getFloat("score")
+            episodes = it.getLong("episodes")
+            type = it.getString("type").toString()
         }
     }
 
@@ -91,9 +99,12 @@ class DescriptionFragment : Fragment() {
         })
 
         binding.animeTitle.text = title
+        binding.AnimeRating.text = "Rating: ${score}"
+        binding.animeType.text = type
+        binding.episodeCount.text = "Episodes : ${episodes}"
+
         val viewPager = binding.viewPager
         viewPager.adapter = posterAdapter
-
         viewPager.clipToPadding = false
         viewPager.clipChildren = false
         viewPager.offscreenPageLimit = 3

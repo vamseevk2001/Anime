@@ -125,7 +125,7 @@ class FragmentHome : Fragment(), OnItemClick {
     }
 
     override fun onAnimeClick(item: AnimeSeries, view: View) {
-        val action = FragmentHomeDirections.actionFragmentHomeToDescriptionFragment(item.mal_id, item.title)
+        val action = FragmentHomeDirections.actionFragmentHomeToDescriptionFragment(item.mal_id, item.title, item.episodes, item.type, item.score)
         view.findNavController().navigate(action)
     }
 
