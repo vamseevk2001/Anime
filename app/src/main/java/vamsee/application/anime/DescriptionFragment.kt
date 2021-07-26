@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import kotlinx.android.synthetic.main.fragment_home.*
 import vamsee.application.anime.adapter.ImageSliderAdapter
 import vamsee.application.anime.databinding.FragmentDescriptionBinding
 import vamsee.application.anime.modal.Poster
@@ -99,9 +100,22 @@ class DescriptionFragment : Fragment() {
         })
 
         binding.animeTitle.text = title
-        binding.AnimeRating.text = "Rating: ${score}"
+        if(score == 0.0f){
+            binding.AnimeRating.text = "To be aired"
+            binding.episodeCount.visibility = View.GONE
+        }
+        else{
+            binding.AnimeRating.text = "Rating : ${score}"
+            if(episodes != 0L){
+                binding.episodeCount.text = "Episodes : ${episodes}"
+            }
+            else{
+                binding.episodeCount.text = "Airing"
+            }
+        }
+
         binding.animeType.text = type
-        binding.episodeCount.text = "Episodes : ${episodes}"
+
 
         val viewPager = binding.viewPager
         viewPager.adapter = posterAdapter
