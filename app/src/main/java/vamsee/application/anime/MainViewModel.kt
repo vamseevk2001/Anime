@@ -74,4 +74,6 @@ class MainViewModel(private val repository: Repository):ViewModel() {
             recommendations.value = response
         }
     }
+
+
 }

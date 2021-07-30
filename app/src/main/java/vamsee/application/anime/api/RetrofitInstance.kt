@@ -3,6 +3,7 @@ package vamsee.application.anime.api
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import vamsee.application.anime.utils.Constants.Companion.BASE_URL
+import vamsee.application.anime.utils.Constants.Companion.TMDB
 
 object RetrofitInstance {
 
@@ -22,7 +23,19 @@ object RetrofitInstance {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
+
+    private val sharves by lazy {
+        Retrofit.Builder()
+            .baseUrl(TMDB)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
     val api: SimpleApi by lazy {
         retrofit.create(SimpleApi::class.java)
+    }
+
+    val tmbd: SimpleApi by lazy {
+        sharves.create(SimpleApi::class.java)
     }
 }

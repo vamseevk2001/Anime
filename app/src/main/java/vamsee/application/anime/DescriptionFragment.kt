@@ -10,18 +10,22 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.fragment_home.*
 import vamsee.application.anime.adapter.ImageSliderAdapter
+import vamsee.application.anime.adapter.MyAdapter
+import vamsee.application.anime.adapter.OnItemClick
 import vamsee.application.anime.databinding.FragmentDescriptionBinding
+import vamsee.application.anime.modal.AnimeSeries
 import vamsee.application.anime.modal.Poster
 import vamsee.application.anime.repository.Repository
 import kotlin.properties.Delegates
 
-class DescriptionFragment : Fragment() {
+class DescriptionFragment : Fragment(), OnItemClick {
 
     private var _binding: FragmentDescriptionBinding? = null
     private val binding get() = _binding!!
@@ -35,6 +39,7 @@ class DescriptionFragment : Fragment() {
     private val autoSlider: Handler = Handler()
     private lateinit var viewModel: MainViewModel
     private val posterAdapter by lazy { context?.let { ImageSliderAdapter(it, binding.viewPager) } }
+    private val moreLikeThis by lazy { context?.let { MyAdapter(it, this) }}
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,64 +64,68 @@ class DescriptionFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setData()
+        poster()
+        moreLikeThis()
+    }
 
+    private fun setData() {
         val repository = Repository()
         val viewModelFactory = MainViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
         viewModel.getAnimePosters(mal_id)
         viewModel.posterList.observe(viewLifecycleOwner, Observer { response ->
-           if(response.isSuccessful){
-               response.body()?.let { posterAdapter?.setPoster(
-                   if (it.pictures.size > 5){
-                       it.pictures.take(5) as ArrayList<Poster>
-                   }
-                   else{
-                       it.pictures as ArrayList<Poster>
-                   }
-               )
-                    }
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    posterAdapter?.setPoster(
+                        if (it.pictures.size > 5) {
+                            it.pictures.take(5) as ArrayList<Poster>
+                        } else {
+                            it.pictures as ArrayList<Poster>
+                        }
+                    )
+                }
                 Log.d("Response", response.body().toString())
-            }
-            else{
-                Toast.makeText(context, "unable to load posters!! ${response.errorBody()}",
-                    Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(
+                    context, "unable to load posters!! ${response.errorBody()}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
 
         viewModel.searchAnime(title)
         viewModel.searchedAnime.observe(viewLifecycleOwner, Observer { response ->
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 response.body()?.searchResults?.forEach lit@{
-                    if (it.mal_id == mal_id){
+                    if (it.mal_id == mal_id) {
                         binding.AnimeDescription.text = it.synopsis
                         return@lit
                     }
                 }
-            }
-            else{
+            } else {
                 Toast.makeText(context, "unable to search anime !!", Toast.LENGTH_SHORT).show()
             }
 
         })
 
         binding.animeTitle.text = title
-        if(score == 0.0f){
+        if (score == 0.0f) {
             binding.AnimeRating.text = "To be aired"
             binding.episodeCount.visibility = View.GONE
-        }
-        else{
+        } else {
             binding.AnimeRating.text = "Rating : ${score}"
-            if(episodes != 0L){
+            if (episodes != 0L) {
                 binding.episodeCount.text = "Episodes : ${episodes}"
-            }
-            else{
+            } else {
                 binding.episodeCount.text = "Airing"
             }
         }
 
         binding.animeType.text = type
+    }
 
-
+    private fun poster() {
         val viewPager = binding.viewPager
         viewPager.adapter = posterAdapter
         viewPager.clipToPadding = false
@@ -138,7 +147,7 @@ class DescriptionFragment : Fragment() {
         }
 
         viewPager.setPageTransformer(compositePageTransformer)
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 autoSlider.removeCallbacks(sliderRunnable)
@@ -146,12 +155,42 @@ class DescriptionFragment : Fragment() {
             }
         }
         )
+    }
 
-
-
-
-
+    private fun cast() {
 
     }
+
+    private fun moreLikeThis(){
+        val repository = Repository()
+        val viewModelFactory = MainViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
+        viewModel.getRecommendations(mal_id)
+        viewModel.recommendations.observe(viewLifecycleOwner, { response ->
+            if (response.isSuccessful){
+                response.body()?.recommendations?.let { moreLikeThis?.setData(it.take(9)) }
+                Log.d("response", response.body()?.recommendations.toString())
+            }
+            else{
+                Log.d("moreLikeThis", response.errorBody().toString())
+            }
+
+        })
+        val similarAnime = binding.moreLikeThis
+        similarAnime.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        similarAnime.adapter = moreLikeThis
+    }
+
+    override fun onAnimeClick(item: AnimeSeries, view: View) {
+//        val action = DescriptionFragmentDirections.actionDescriptionFragmentSelf(
+//            item.mal_id,
+//            item.title,
+//            item.episodes,
+//            item.type,
+//            item.score
+//        )
+//        view.findNavController().navigate(action)
+    }
+
 
 }

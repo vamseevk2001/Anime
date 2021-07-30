@@ -89,16 +89,15 @@ class FragmentHome : Fragment(), OnItemClick {
                 Log.d("Response", response.body()?.top?.get(0)?.title.toString())
                 response.body()?.let {
                     topRatedAdapter?.setData(it.top)
-                    it.top.forEach {
-                        promoList.add(it)
-                    }
+//                    it.top.forEach {
+//                        promoList.add(it)
+//                    }
                 }
             } else {
                 Log.d("Response", response.errorBody().toString())
                 Toast.makeText(context, "error ${response.errorBody()}", Toast.LENGTH_SHORT).show()
             }
         })
-
 
         viewModel.getTopAiring()
         viewModel.topAiring.observe(viewLifecycleOwner, Observer { response ->
@@ -134,17 +133,6 @@ class FragmentHome : Fragment(), OnItemClick {
         })
 
 
-//        viewModel.getRecommendations(21)
-//        viewModel.recommendations.observe(viewLifecycleOwner, Observer { response ->
-//            if (response.isSuccessful) {
-//                promoId = response.body()?.recommendations?.take(6)!!
-//                Log.d("promoID", promoId.toString())
-//            } else {
-//                Log.d("promoID", response.errorBody().toString())
-//                Toast.makeText(context, "error ${response.errorBody()}", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//
         promoId.forEach { it ->
             viewModel.getPromos(it.mal_id)
             viewModel.promos.observe(viewLifecycleOwner, Observer { response ->
@@ -166,13 +154,57 @@ class FragmentHome : Fragment(), OnItemClick {
         Log.d("AnimeList", promoList.toString())
 
         promoList = arrayListOf(
-            AnimeSeries(0, "One Piece",
-                "https://i.ytimg.com/vi/l_98K4_6UQ0/mqdefault.jpg",
-                "", 9, 9.8f, "", ""),
-            AnimeSeries(0, "Naruto",
-                "https://i.ytimg.com/vi/j2hiC9BmJlQ/mqdefault.jpg",
-                "", 9, 9.8f, "", "")
-        )
+            AnimeSeries(
+                6702, "Fairy Tail",
+                "https://9tailedkitsune.com/wp-content/uploads/2020/08/fairy-tail-koei-tecmo-videogioco-pdvg-800x445.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=BaIWwk-sAlw"
+            ),
+            AnimeSeries(
+                11061, "Hunter x Hunter",
+                "https://occ-0-1722-1723.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRpjstglCxdnk-N1buyJJEUpI0tMn28yj9-UXnUCY40nWh3L-2osrAa5WWod7W1UKeDBcK-T__tqjqiKSXZCPm48TEGe.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=d6kBeJjTGnY&t=12s"
+            ),
+            AnimeSeries(
+                2223, "Dragon Ball Z",
+                "https://images.nintendolife.com/8ce294add2bb3/dragon-ball-z-kakarot.original.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=sxufB6DxXk0"
+            ),
+            AnimeSeries(
+                918, "Gintama",
+                "https://otakuusamagazine.com/wp-content/uploads/2020/09/gintama-final-sheets.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=YQC3ot0IjiA&t=1s"
+            ),
+            AnimeSeries(
+                1735, "Naruto: Shippuden",
+                "https://static.gojinshi.com/wp-content/uploads/2020/07/Naruto-Shippuden-Filler-Episodes-List.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=thh7bVCgDHs"
+            ),
+            AnimeSeries(
+                3588, "Soul Eater",
+                "https://nefariousreviews.files.wordpress.com/2019/05/soul-eater-featured.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=pcAigv_MQAo"
+            ),
+            AnimeSeries(
+                269, "Bleach",
+                "https://thenewsfetcher.com/wp-content/uploads/2020/09/bleach-1212912.jpeg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=oZ67d9XSjFs"
+            ),
+            AnimeSeries(
+                34572, "Black Clover",
+                "https://theawesomeone.com/wp-content/uploads/2020/12/black-clover-anime.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/embed/vUjAxk1qYzQ?enablejsapi=1&wmode=opaque&autoplay=1"
+            ),
+            AnimeSeries(
+                31964, "My Hero Academia",
+                "https://thecinemaholic.com/wp-content/uploads/2021/03/My-Hero-Academia-2.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=wIb3nnOeves"
+            ),
+            AnimeSeries(
+                24833, "Assasination Classroom",
+                "https://www.tvovermind.com/wp-content/uploads/2018/11/Assasination-Classroom.jpg",
+                "", 9, 9.8f, "", "https://www.youtube.com/watch?v=kgNkGohA20k"
+            )
+            )
 
         promoAdapter?.setPromo(promoList)
         promos.adapter = promoAdapter
@@ -192,14 +224,8 @@ class FragmentHome : Fragment(), OnItemClick {
         view.findNavController().navigate(action)
     }
 
-//    fun setUpPromos() {
-//
-//
-//        val repository = Repository()
-//        val viewModelFactory = MainViewModelFactory(repository)
-//        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-//
-//
-//    }
+
+
+
 
 }
